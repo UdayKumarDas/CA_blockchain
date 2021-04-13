@@ -273,7 +273,6 @@ var fs = require('fs');
 filePath = 'accounts.txt';
 fileBuffer =  fs.readFileSync(filePath);
 to_string = fileBuffer.toString();
-//console.log(to_string);
 split_lines = to_string.split("\n");
 count = split_lines.length
 
@@ -318,5 +317,5 @@ const totalSupply = async() => {
 
 returnValues()
 
-module.exports = { returnValues, totalSupply, address_arr}
+module.exports = { returnValues, totalSupply}
 module.exports.address_arr = split_lines
