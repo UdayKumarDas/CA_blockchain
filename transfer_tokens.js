@@ -9,8 +9,6 @@ const web3 = new Web3('https://ropsten.infura.io/v3/5be82dca3e524b3cb039378a08c1
 
 // use your owner_account and account2 from metamask here!
 const owner_account = '0x4b31275Cd393A4A6AcE31624003f158894621AB2' // Your account address 1
-const account2 = '0xcB2769a9F90F2f96eC24C7Dfb18Ec25eC42c350a' // Your account address 2
-
 // put in your private keys here (from metamask)
 const privateKey1 = Buffer.from('46bfac36d5ea81dd9ce7929f5a4b0b66a620dd0d652fab1ba3c9dede0c49e560', 'hex')
 //const privateKey2 = Buffer.from('d872707c1edb60330d957a86740e35de99bc17fdb40e00d7e15915e90200d7ec', 'hex')
