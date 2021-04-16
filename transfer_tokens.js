@@ -8,270 +8,15 @@ var Tx = require('ethereumjs-tx').Transaction
 const web3 = new Web3('https://ropsten.infura.io/v3/5be82dca3e524b3cb039378a08c16fb3') // Your Infura Endpoint here 
 
 // use your owner_account and account2 from metamask here!
-const owner_account = '0x4b31275Cd393A4A6AcE31624003f158894621AB2' // Your account address 1
+const owner_account = '0x5624Ca0d2Ef4759bf4043b1Be51966b0Ca218e41' // Your account address 1
 // put in your private keys here (from metamask)
-const privateKey1 = Buffer.from('46bfac36d5ea81dd9ce7929f5a4b0b66a620dd0d652fab1ba3c9dede0c49e560', 'hex')
-//const privateKey2 = Buffer.from('d872707c1edb60330d957a86740e35de99bc17fdb40e00d7e15915e90200d7ec', 'hex')
+const privateKey1 = Buffer.from('25be1ed4a98c5b0e9fbf0df0bd9b790b944d227c35cce0b1d69d8eae02dd0360', 'hex')
 
 // Read the deployed contract - get the addresss from Etherscan 
 // - use your deployed contract address here!
-const contractAddress = '0x359527247b434d36b7234424852e1c7c56dd2af8'
+const contractAddress = '0x632e311e9df4e91b72c4bf46c19bfff73d09814c'
 
-const contractABI = [
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
-    ],
-    "name": "Approval",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transfer",
-    "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "approve",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "transfer",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferFrom",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "inputs": [],
-    "name": "_totalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      }
-    ],
-    "name": "allowance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [
-      {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "name",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "tokenOwner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-]// YOUR CONTRACT ABI HERE
+const contractABI = data.abi// YOUR CONTRACT ABI HERE
 
 const contract = new web3.eth.Contract(contractABI, contractAddress)
 
@@ -320,16 +65,8 @@ const getBalanceOf = async(account) => {
   return `balance of account ${account} is ${balanceOf}`
 }
 
-
 var go = async(receiver_account) => {
-    var totSupply = await web3.eth.getBalance(owner_account, (err, balance) => { 
-        decimals=18;
-        balance = new BigDecimal(balance)
-        balance = balance.multiply("1000000000000000000");
-        balance = balance.toString().split(".")[0].substring(0,25)
-        console.log("Remianing balance is: ", balance) 
-        return balance
-    });
+    var totSupply = await contract.methods.totalSupply().call();
     totSupply = new BigDecimal(totSupply);
     totSupply = totSupply.divide(100);
     totSupply = totSupply.multiply(5);
@@ -349,7 +86,7 @@ const delay = (receiver_account) => {
 return new Promise((resolve) => {
     setTimeout(() => {
       resolve(go(receiver_account));
-    }, 8000);
+    }, 7000);
   });
 }
 const startTime = Date.now();
@@ -357,11 +94,10 @@ const doNextPromise = (d) => {
   delay(address_arr[d])
     .then(x => {
       d++;
-      if (d < address_arr.length)
+      if (d < address_arr.length){
         doNextPromise(d)
-      else
-        console.log(`Total: ${(Date.now() - startTime) / 1000} seconds.`);
-    })
+      }
+})
 }
 doNextPromise(0);
 

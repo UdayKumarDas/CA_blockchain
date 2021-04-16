@@ -261,20 +261,21 @@ const abi = [
 ]// Your contract ABI goes here 
 
 
-const address = "0x359527247b434d36b7234424852e1c7c56dd2af8" // Contract Address 
-const owner = "0x4b31275Cd393A4A6AcE31624003f158894621AB2" // Contract Owner - aka metamask account 
+const address = "0x632e311e9df4e91b72c4bf46c19bfff73d09814c" // Contract Address 
+const owner = "0x5624Ca0d2Ef4759bf4043b1Be51966b0Ca218e41" // Contract Owner - aka metamask account 
 
 const contract = new web3.eth.Contract(abi, address)
 
-var count = 0;
-var address_arr = [];
-var totalTokensPerAddress = 0
-var fs = require('fs');
-filePath = 'accounts.txt';
-fileBuffer =  fs.readFileSync(filePath);
-to_string = fileBuffer.toString();
-split_lines = to_string.split("\n");
-count = split_lines.length
+function readAddressesFromFile(){
+  var address_arr = [];
+  var totalTokensPerAddress = 0
+  var fileSys = require('fs');
+  filePath = 'accounts.txt';
+  fileBuffer =  fileSys.readFileSync(filePath);
+  to_string = fileBuffer.toString();
+  split_lines = to_string.split("\n");
+  return split_lines
+}
 
 const getTotalSupply = async() => {
   let totSupply =  await contract.methods.totalSupply().call()
@@ -318,4 +319,5 @@ const totalSupply = async() => {
 returnValues()
 
 module.exports = { returnValues, totalSupply}
-module.exports.address_arr = split_lines
+module.exports.address_arr = readAddressesFromFile()
+module.exports.abi = abi
